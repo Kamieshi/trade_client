@@ -4,8 +4,8 @@ import "github.com/google/uuid"
 
 type Position struct {
 	ID               uuid.UUID `db:"id,omitempty"`
-	Client           *Client   `db:"client,omitempty"`
-	OpenPrice        *Price    `db:"open_price,omitempty"`
+	Client           *User     `db:"client,omitempty"`
+	Company          *Price    `db:"open_price,omitempty"`
 	IsOpened         bool      `db:"is_opened,omitempty"`
 	PriceClose       uint32    `db:"price_close,omitempty"`
 	CurrentCost      int64     `db:"current_cost,omitempty"`
