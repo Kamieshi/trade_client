@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+
 	"tradeClient/internal/config"
 	"tradeClient/internal/handler"
 	"tradeClient/internal/handler/echoHTTP"
@@ -33,7 +34,7 @@ func main() {
 	}
 	priceRPC := protocPrice.NewOwnPriceStreamClient(priceConnect)
 	positionRPC := protocPosition.NewPositionsManagerClient(positionConnect)
-	userRPC := protocPosition.NewClientsManagerClient(positionConnect)
+	userRPC := protocPosition.NewUsersManagerClient(positionConnect)
 
 	handlerPrice := handler.PriceRPC{PriceManagerClient: priceRPC}
 	handlerPosition := handler.PositionRPC{PositionManagerClient: positionRPC}
