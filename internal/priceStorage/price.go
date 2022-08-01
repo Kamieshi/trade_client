@@ -31,7 +31,7 @@ func (p *PriceStorage) ListenCompanyChanel(ctx context.Context) {
 	if err != nil {
 		logrus.WithError(err).Fatalf("service position / ListenCompanyChanel / get stream from handler")
 	}
-	var bufferCompany *model.Price
+	bufferCompany := &model.Price{}
 	for {
 		select {
 		case <-ctx.Done():
@@ -51,11 +51,8 @@ func (p *PriceStorage) ListenCompanyChanel(ctx context.Context) {
 			bufferCompany.Ask = data.Ask
 			bufferCompany.Bid = data.Bid
 			bufferCompany.Time = timeParse
-
 			p.setPrice(bufferCompany)
-
 		}
-
 	}
 }
 

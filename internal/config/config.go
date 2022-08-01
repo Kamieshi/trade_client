@@ -9,7 +9,7 @@ import (
 type Configuration struct {
 	PositionServerRPC string `env:"POSITION_SERVER_RPC_ADDR"`
 	PriceServerRPC    string `env:"PRICE_SERVER_RPC_ADDR"`
-	HttpPort          string `env:"HTTP_PORT"`
+	HttpEchoPort      string `env:"HTTP_ECHO_PORT"`
 }
 
 func GetConfig() (*Configuration, error) {
