@@ -1,0 +1,241 @@
+definitions:
+  model.Position:
+    properties:
+      count_buy_position:
+        type: integer
+      id:
+        readOnly: true
+        type: string
+      is_fixes:
+        description: user limit or not
+        type: boolean
+      is_opened:
+        type: boolean
+      is_sales:
+        description: 'true/false : sale/buy'
+        type: boolean
+      max_current_cost:
+        type: integer
+      min_current_cost:
+        type: integer
+      price:
+        allOf:
+        - $ref: '#/definitions/model.Price'
+        readOnly: true
+      profit:
+        type: integer
+      user_id:
+        type: string
+    type: object
+  model.Price:
+    properties:
+      Ask:
+        type: integer
+      Bid:
+        type: integer
+      CompanyID:
+        type: string
+      Name:
+        type: string
+      Time:
+        type: string
+    type: object
+  model.User:
+    properties:
+      balance:
+        type: integer
+      id:
+        readOnly: true
+        type: string
+      name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    url: https://github.com/Kamieshi
+  title: Swagger Client Trade service
+paths:
+  /position/{companyID}/open:
+    post:
+      parameters:
+      - description: company ID
+        in: path
+        name: companyID
+        required: true
+        type: string
+      - description: postition for open
+        in: body
+        name: position
+        required: true
+        schema:
+          $ref: '#/definitions/model.Position'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Position'
+        "400":
+          description: Err
+          schema:
+            type: string
+      tags:
+      - position
+  /position/{positionID}:
+    get:
+      parameters:
+      - description: position ID
+        in: path
+        name: positionID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Position'
+        "400":
+          description: Err
+          schema:
+            type: string
+      tags:
+      - position
+  /position/close/{userID}/{positionID}:
+    get:
+      parameters:
+      - description: position ID
+        in: path
+        name: positionID
+        required: true
+        type: string
+      - description: userID ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Position'
+        "400":
+          description: Err
+          schema:
+            type: string
+      tags:
+      - position
+  /position/user/{userID}:
+    get:
+      parameters:
+      - description: user ID
+        in: path
+        name: userID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Position'
+            type: array
+        "400":
+          description: Err
+          schema:
+            type: string
+      tags:
+      - position
+  /price:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Price'
+            type: array
+        "400":
+          description: bad Request
+          schema:
+            type: string
+      tags:
+      - price
+  /user:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.User'
+            type: array
+        "400":
+          description: Err
+          schema:
+            type: string
+      tags:
+      - user
+    post:
+      parameters:
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: bad Request
+          schema:
+            type: string
+      tags:
+      - user
+  /user/{userName}:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: userName
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+        "404":
+          description: Not found User
+          schema:
+            type: string
+      tags:
+      - user
+  /user/updateBalance/{difference}:
+    post:
+      parameters:
+      - description: difference
+        in: path
+        name: difference
+        required: true
+        type: string
+      - description: user
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Not found User
+          schema:
+            type: string
+      tags:
+      - user
+swagger: "2.0"

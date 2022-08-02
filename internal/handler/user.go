@@ -8,10 +8,12 @@ import (
 	"github.com/Kamieshi/trade_client/internal/model"
 )
 
+// UserRPC user rpc interface
 type UserRPC struct {
 	UserManagerClient protoc.UsersManagerClient
 }
 
+// GetByName get by name
 func (u *UserRPC) GetByName(ctx context.Context, name string) (*model.User, error) {
 	resp, err := u.UserManagerClient.GetUser(ctx, &protoc.GetUserRequest{Name: name})
 	if err != nil {
@@ -27,6 +29,7 @@ func (u *UserRPC) GetByName(ctx context.Context, name string) (*model.User, erro
 	}, nil
 }
 
+// GetAll get all users
 func (u *UserRPC) GetAll(ctx context.Context) ([]*model.User, error) {
 	resp, err := u.UserManagerClient.GetAllUsers(ctx, &protoc.GetAllUserRequest{})
 	if err != nil {
@@ -46,6 +49,7 @@ func (u *UserRPC) GetAll(ctx context.Context) ([]*model.User, error) {
 	return users, nil
 }
 
+// UpdateBalance update balance
 func (u *UserRPC) UpdateBalance(ctx context.Context, user *model.User, different int64) error {
 	resp, err := u.UserManagerClient.AddBalance(ctx, &protoc.AddBalanceRequest{
 		UserID:           user.ID,
@@ -60,6 +64,7 @@ func (u *UserRPC) UpdateBalance(ctx context.Context, user *model.User, different
 	return nil
 }
 
+// CreateUser create new user
 func (u *UserRPC) CreateUser(ctx context.Context, user *model.User) error {
 	resp, err := u.UserManagerClient.CreateUser(ctx, &protoc.CreateUserRequest{User: &protoc.User{
 		Name:    user.Name,

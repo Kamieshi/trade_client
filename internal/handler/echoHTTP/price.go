@@ -7,10 +7,12 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// PositionHandler HTTP echo handler from price
 type PriceHandler struct {
 	PriceStorage *priceStorage.PriceStorage
 }
 
+// GetAll return all prices
 // @Tags         price
 // @Success      200  {array} model.Price
 // @Failure      400  string true "bad Request"

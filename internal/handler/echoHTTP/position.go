@@ -1,3 +1,4 @@
+// Package echoHTTP Handlers from echo
 package echoHTTP
 
 import (
@@ -9,10 +10,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// PositionHandler HTTP echo handler from position
 type PositionHandler struct {
 	PositionService *service.PositionService
 }
 
+// ClosePosition Close position
 // @Tags         position
 // @Param        positionID path string true "position ID"
 // @Param        userID path string true "userID ID"
@@ -35,6 +38,7 @@ func (p *PositionHandler) ClosePosition(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, position)
 }
 
+// OpenPosition open position
 // @Tags         position
 // @Param        companyID path string true "company ID"
 // @Param 		 position body model.Position true "postition for open"
@@ -65,6 +69,7 @@ func (p *PositionHandler) OpenPosition(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, position)
 }
 
+// GetPosition Get position by ID
 // @Tags         position
 // @Param        positionID path string true "position ID"
 // @Success      200  {object}  model.Position
@@ -84,6 +89,7 @@ func (p *PositionHandler) GetPosition(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, position)
 }
 
+// GetAllUserPosition get all positions for user
 // @Tags         position
 // @Param        userID path string true "user ID"
 // @Success      200  {array}  model.Position

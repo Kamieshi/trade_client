@@ -16,6 +16,7 @@ type PositionService struct {
 	PriceStorage    *prStor.PriceStorage
 }
 
+// OpenPosition open position
 func (p *PositionService) OpenPosition(ctx context.Context, position *model.Position) error {
 	actualPrice, err := p.PriceStorage.GetPrice(position.Price.CompanyID)
 	if err != nil {
@@ -30,6 +31,7 @@ func (p *PositionService) OpenPosition(ctx context.Context, position *model.Posi
 	return nil
 }
 
+// ClosePosition close position
 func (p *PositionService) ClosePosition(ctx context.Context, position *model.Position) (int64, error) {
 	profit, err := p.PositionHandler.ClosePosition(ctx, position)
 	if err != nil {
@@ -38,6 +40,7 @@ func (p *PositionService) ClosePosition(ctx context.Context, position *model.Pos
 	return profit, nil
 }
 
+// GetAllUserPosition all positions form one user
 func (p *PositionService) GetAllUserPosition(ctx context.Context, userID string) ([]*model.Position, error) {
 	positions, err := p.PositionHandler.GetAllUserPositions(ctx, userID)
 	if err != nil {
@@ -46,6 +49,7 @@ func (p *PositionService) GetAllUserPosition(ctx context.Context, userID string)
 	return positions, err
 }
 
+// GetPositionByID get position by id
 func (p *PositionService) GetPositionByID(ctx context.Context, positionID string) (*model.Position, error) {
 	position, err := p.PositionHandler.GetPositionByID(ctx, positionID)
 	if err != nil {

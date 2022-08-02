@@ -8,10 +8,12 @@ import (
 	"github.com/Kamieshi/trade_client/internal/model"
 )
 
+// PositionRPC interface rpc
 type PositionRPC struct {
 	PositionManagerClient protoc.PositionsManagerClient
 }
 
+// OpenPosition Open position
 func (p *PositionRPC) OpenPosition(ctx context.Context, position *model.Position) (string, error) {
 	resp, err := p.PositionManagerClient.OpenPosition(ctx, &protoc.OpenPositionRequest{
 		Price: &protoc.Price{
@@ -38,6 +40,7 @@ func (p *PositionRPC) OpenPosition(ctx context.Context, position *model.Position
 	return resp.ID, nil
 }
 
+// ClosePosition close position
 func (p *PositionRPC) ClosePosition(ctx context.Context, position *model.Position) (int64, error) {
 	resp, err := p.PositionManagerClient.ClosePosition(ctx, &protoc.ClosePositionRequest{
 		PositionID: position.ID,
@@ -61,6 +64,7 @@ func (p *PositionRPC) ClosePosition(ctx context.Context, position *model.Positio
 	return resp.Profit, nil
 }
 
+// GetPositionByID get position by id
 func (p *PositionRPC) GetPositionByID(ctx context.Context, positionID string) (*model.Position, error) {
 	resp, err := p.PositionManagerClient.GetPositionByID(ctx, &protoc.GetPositionByIDRequest{PositionID: positionID})
 	if err != nil {
@@ -88,6 +92,7 @@ func (p *PositionRPC) GetPositionByID(ctx context.Context, positionID string) (*
 	}, nil
 }
 
+// GetAllUserPositions Get all positions from user
 func (p *PositionRPC) GetAllUserPositions(ctx context.Context, userID string) ([]*model.Position, error) {
 	resp, err := p.PositionManagerClient.GetAllUserPositions(ctx, &protoc.GetAllUserPositionsRequest{UserID: userID})
 	if err != nil {

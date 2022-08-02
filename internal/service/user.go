@@ -40,6 +40,7 @@ func (c *UserService) UpdateBalance(ctx context.Context, user *model.User, diffe
 	return err
 }
 
+// CreateUser create new user
 func (c *UserService) CreateUser(ctx context.Context, user *model.User) error {
 	err := c.UserHandler.CreateUser(ctx, user)
 	if err != nil {

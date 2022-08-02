@@ -1,5 +1,7 @@
+// Package model models from application
 package model
 
+// Position  model
 type Position struct {
 	ID               string `json:"id" readonly:"true"`
 	UserID           string `json:"user_id"`

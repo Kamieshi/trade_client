@@ -1,3 +1,4 @@
+// Package priceStorage get actual prices
 package priceStorage
 
 import (
@@ -11,12 +12,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// PriceStorage storage price
 type PriceStorage struct {
 	PositionHandler *handler.PriceRPC
 	mutex           sync.RWMutex
 	Prices          map[string]*model.Price
 }
 
+// NewPriceStorage Constructor
 func NewPriceStorage(ph *handler.PriceRPC) *PriceStorage {
 	return &PriceStorage{
 		PositionHandler: ph,

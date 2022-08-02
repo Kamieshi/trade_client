@@ -10,10 +10,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// UserHandler HTTP echo handler from users
 type UserHandler struct {
 	UserService *service.UserService
 }
 
+// Get get user by name
 // @Tags         user
 // @Param        userName path string true "Username"
 // @Success      200  {object}  model.User
@@ -30,6 +32,7 @@ func (c *UserHandler) Get(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, user)
 }
 
+// GetAll get all users
 // @Tags         user
 // @Success      200  {object}  []model.User
 // @Failure      400  string true "Err"
@@ -44,6 +47,7 @@ func (c *UserHandler) GetAll(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, users)
 }
 
+// UpdateBalance update balance
 // @Tags         user
 // @Param        difference path string true "difference"
 // @Param        user body model.User true "user"
@@ -71,6 +75,7 @@ func (c *UserHandler) UpdateBalance(ctx echo.Context) error {
 	return ctx.String(http.StatusAccepted, "")
 }
 
+// CreateUser create new user
 // @Tags         user
 // @Param        user body model.User true "user"
 // @Success      200  {object} model.User
