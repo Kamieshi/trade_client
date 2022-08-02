@@ -5,20 +5,26 @@ import (
 	"fmt"
 	"log"
 
-	"tradeClient/internal/config"
-	"tradeClient/internal/handler"
-	"tradeClient/internal/handler/echoHTTP"
-	prStor "tradeClient/internal/priceStorage"
-	"tradeClient/internal/service"
-
 	protocPosition "github.com/Kamieshi/position_service/protoc"
 	protocPrice "github.com/Kamieshi/price_service/protoc"
+	_ "github.com/Kamieshi/trade_client/docs"
+	"github.com/Kamieshi/trade_client/internal/config"
+	"github.com/Kamieshi/trade_client/internal/handler"
+	"github.com/Kamieshi/trade_client/internal/handler/echoHTTP"
+	prStor "github.com/Kamieshi/trade_client/internal/priceStorage"
+	"github.com/Kamieshi/trade_client/internal/service"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
+	echoSwagger "github.com/swaggo/echo-swagger"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
+// @title Swagger Client Trade service
+
+// @contact.url https://github.com/Kamieshi
+
+// @host localhost:8080
 func main() {
 	conf, err := config.GetConfig()
 	if err != nil {
@@ -60,11 +66,20 @@ func main() {
 
 	userGroup := e.Group("/user")
 	userGroup.GET("", userHandlerHTTP.GetAll)
+	userGroup.POST("", userHandlerHTTP.CreateUser)
+	userGroup.GET("/:userName", userHandlerHTTP.Get)
+	userGroup.POST("/updateBalance/:difference", userHandlerHTTP.UpdateBalance)
 
 	positionGroup := e.Group("/position")
-	positionGroup.GET("", positionHandlerHTTP.GetAll)
+	positionGroup.GET("/user/:userID", positionHandlerHTTP.GetAllUserPosition)
+	positionGroup.GET("/:positionID", positionHandlerHTTP.GetPosition)
+	positionGroup.POST("/:companyID/open", positionHandlerHTTP.OpenPosition)
+	positionGroup.GET("/close/:userID/:positionID", positionHandlerHTTP.ClosePosition)
 
 	priceGroup := e.Group("/price")
 	priceGroup.GET("", priceHandlerHTTP.GetAll)
+
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
+
 	logrus.Info(e.Start(fmt.Sprintf(":%s", conf.HttpEchoPort)))
 }

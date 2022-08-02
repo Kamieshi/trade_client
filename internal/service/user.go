@@ -3,8 +3,9 @@ package service
 import (
 	"context"
 	"fmt"
-	"tradeClient/internal/handler"
-	"tradeClient/internal/model"
+
+	"github.com/Kamieshi/trade_client/internal/handler"
+	"github.com/Kamieshi/trade_client/internal/model"
 )
 
 // UserService  work with users
@@ -37,4 +38,12 @@ func (c *UserService) UpdateBalance(ctx context.Context, user *model.User, diffe
 		return fmt.Errorf("service user / UpdateBalance /update user balance : %v", err)
 	}
 	return err
+}
+
+func (c *UserService) CreateUser(ctx context.Context, user *model.User) error {
+	err := c.UserHandler.CreateUser(ctx, user)
+	if err != nil {
+		return fmt.Errorf("service user /  Create User / create user from handler : %v", err)
+	}
+	return nil
 }

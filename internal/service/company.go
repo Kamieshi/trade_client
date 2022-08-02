@@ -2,8 +2,9 @@ package service
 
 import (
 	"fmt"
-	"tradeClient/internal/model"
-	"tradeClient/internal/priceStorage"
+
+	"github.com/Kamieshi/trade_client/internal/model"
+	"github.com/Kamieshi/trade_client/internal/priceStorage"
 )
 
 // CompanyService work with all companies

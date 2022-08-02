@@ -4,11 +4,10 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
-	"tradeClient/internal/handler"
-	"tradeClient/internal/model"
 
 	"github.com/Kamieshi/price_service/protoc"
+	"github.com/Kamieshi/trade_client/internal/handler"
+	"github.com/Kamieshi/trade_client/internal/model"
 	"github.com/sirupsen/logrus"
 )
 
@@ -41,16 +40,12 @@ func (p *PriceStorage) ListenCompanyChanel(ctx context.Context) {
 			if err != nil {
 				logrus.WithError(err).Error("service price / ListenCompanyChanel / get data from stream")
 			}
-			timeParse, err := time.Parse("2006-01-02T15:04:05.000TZ-07:00", data.Time)
-			if err != nil {
-				logrus.WithError(err).Error("service price / ListenCompanyChanel / parse time")
-			}
 
 			bufferCompany.CompanyID = data.Company.ID
 			bufferCompany.Name = data.Company.Name
 			bufferCompany.Ask = data.Ask
 			bufferCompany.Bid = data.Bid
-			bufferCompany.Time = timeParse
+			bufferCompany.Time = data.Time
 			p.setPrice(bufferCompany)
 		}
 	}
