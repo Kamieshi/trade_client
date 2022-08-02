@@ -24,17 +24,16 @@ import (
 
 // @contact.url https://github.com/Kamieshi
 
-// @host localhost:8080
 func main() {
 	conf, err := config.GetConfig()
 	if err != nil {
 		logrus.WithError(err).Fatalf("Error parse config")
 	}
-	positionConnect, err := grpc.Dial(conf.PositionServerRPC, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	positionConnect, err := grpc.Dial(conf.PositionServerRPCAddr(), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}
-	priceConnect, err := grpc.Dial(conf.PriceServerRPC, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	priceConnect, err := grpc.Dial(conf.PriceServerRPCAddr(), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}
