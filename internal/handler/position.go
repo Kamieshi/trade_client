@@ -55,12 +55,14 @@ func (p *PositionRPC) ClosePosition(ctx context.Context, position *model.Positio
 		},
 		UserID: position.UserID,
 	})
+
 	if err != nil {
 		return 0, fmt.Errorf("handler position / ClosePosition / RPC protocol error : %v", err)
 	}
 	if resp.Error != "" {
 		return 0, fmt.Errorf("handler position / ClosePosition / RPC client error : %v", resp.Error)
 	}
+	position.Profit = resp.Profit
 	return resp.Profit, nil
 }
 

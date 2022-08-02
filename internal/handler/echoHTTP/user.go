@@ -50,24 +50,20 @@ func (c *UserHandler) GetAll(ctx echo.Context) error {
 // UpdateBalance update balance
 // @Tags         user
 // @Param        difference path string true "difference"
+// @Param        userID path string true "userID"
 // @Param        user body model.User true "user"
 // @Success      200  {string} string
 // @Failure      404  string true "Not found User"
-// @Router       /user/updateBalance/{difference} [post]
+// @Router       /user/{userID}/updateBalance/{difference} [get]
 // UpdateBalance get user by user Name
 func (c *UserHandler) UpdateBalance(ctx echo.Context) error {
-	user := new(model.User)
 	different, err := strconv.ParseInt(ctx.Param("difference"), 10, 64)
 	if err != nil {
 		logrus.WithError(err).Errorf("User handler echo / UpdateBalance / Parse %s to int", ctx.Param("difference"))
 		return ctx.String(http.StatusBadRequest, err.Error())
 	}
-	err = ctx.Bind(&user)
-	if err != nil {
-		logrus.WithError(err).Error("user handler echo / UpdateBalance / Bind user")
-		return ctx.String(http.StatusBadRequest, err.Error())
-	}
-	err = c.UserService.UpdateBalance(ctx.Request().Context(), user, different)
+	userID := ctx.Param("userID")
+	err = c.UserService.UpdateBalance(ctx.Request().Context(), userID, different)
 	if err != nil {
 		logrus.WithError(err).Error("user handler echo / UpdateBalance / Update balance from service")
 		return ctx.String(http.StatusBadRequest, err.Error())

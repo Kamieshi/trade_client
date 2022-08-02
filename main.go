@@ -68,7 +68,7 @@ func main() {
 	userGroup.GET("", userHandlerHTTP.GetAll)
 	userGroup.POST("", userHandlerHTTP.CreateUser)
 	userGroup.GET("/:userName", userHandlerHTTP.Get)
-	userGroup.POST("/updateBalance/:difference", userHandlerHTTP.UpdateBalance)
+	userGroup.GET("/:userID/updateBalance/:difference", userHandlerHTTP.UpdateBalance)
 
 	positionGroup := e.Group("/position")
 	positionGroup.GET("/user/:userID", positionHandlerHTTP.GetAllUserPosition)

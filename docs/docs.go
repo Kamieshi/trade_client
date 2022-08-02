@@ -235,8 +235,8 @@ const docTemplate = `{
                 }
             }
         },
-        "/user/updateBalance/{difference}": {
-            "post": {
+        "/user/{userID}/updateBalance/{difference}": {
+            "get": {
                 "tags": [
                     "user"
                 ],
@@ -245,6 +245,13 @@ const docTemplate = `{
                         "type": "string",
                         "description": "difference",
                         "name": "difference",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "userID",
+                        "name": "userID",
                         "in": "path",
                         "required": true
                     },
@@ -321,7 +328,8 @@ const docTemplate = `{
                     "type": "boolean"
                 },
                 "is_opened": {
-                    "type": "boolean"
+                    "type": "boolean",
+                    "readOnly": true
                 },
                 "is_sales": {
                     "description": "true/false : sale/buy",
@@ -342,7 +350,8 @@ const docTemplate = `{
                     "readOnly": true
                 },
                 "profit": {
-                    "type": "integer"
+                    "type": "integer",
+                    "readOnly": true
                 },
                 "user_id": {
                     "type": "string"

@@ -10,6 +10,7 @@ definitions:
         description: user limit or not
         type: boolean
       is_opened:
+        readOnly: true
         type: boolean
       is_sales:
         description: 'true/false : sale/buy'
@@ -23,6 +24,7 @@ definitions:
         - $ref: '#/definitions/model.Price'
         readOnly: true
       profit:
+        readOnly: true
         type: integer
       user_id:
         type: string
@@ -194,31 +196,17 @@ paths:
             type: string
       tags:
       - user
-  /user/{userName}:
+  /user/{userID}/updateBalance/{difference}:
     get:
-      parameters:
-      - description: Username
-        in: path
-        name: userName
-        required: true
-        type: string
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.User'
-        "404":
-          description: Not found User
-          schema:
-            type: string
-      tags:
-      - user
-  /user/updateBalance/{difference}:
-    post:
       parameters:
       - description: difference
         in: path
         name: difference
+        required: true
+        type: string
+      - description: userID
+        in: path
+        name: userID
         required: true
         type: string
       - description: user
@@ -232,6 +220,25 @@ paths:
           description: OK
           schema:
             type: string
+        "404":
+          description: Not found User
+          schema:
+            type: string
+      tags:
+      - user
+  /user/{userName}:
+    get:
+      parameters:
+      - description: Username
+        in: path
+        name: userName
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
         "404":
           description: Not found User
           schema:

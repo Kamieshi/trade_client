@@ -32,8 +32,8 @@ func (c *UserService) GetAll(ctx context.Context) ([]*model.User, error) {
 }
 
 // UpdateBalance Update balance (positive or negative different)
-func (c *UserService) UpdateBalance(ctx context.Context, user *model.User, different int64) error {
-	err := c.UserHandler.UpdateBalance(ctx, user, different)
+func (c *UserService) UpdateBalance(ctx context.Context, userID string, different int64) error {
+	err := c.UserHandler.UpdateBalance(ctx, &model.User{ID: userID}, different)
 	if err != nil {
 		return fmt.Errorf("service user / UpdateBalance /update user balance : %v", err)
 	}
